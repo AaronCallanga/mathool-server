@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+// Class for better error response structure used to send meaningful error information to the client
 public class ErrorResponse {
+    // Formatted such as 2025-07-11 12:00:00, timestamp when the error occur
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
     private int statusCode;

@@ -11,13 +11,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+ /*
+ * Integration test class for MathController.
+ * This test suite uses MockMvc to simulate real HTTP requests against the actual
+ * service layer and controller beans. It tests both successful and failed scenarios.
+ */
 @SpringBootTest  // Load all application context, making mockmvc use your real service
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc   // Auto-configure MockMvc for endpoint testing
 class MathControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Test GET /api/v1/math/prime with a valid prime number (7).
+     * Expects HTTP 200 and isPrime = true in the response.
+     */
     @Test
     void testCheckIfPrimeNumber() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/math/prime")
@@ -27,6 +36,10 @@ class MathControllerIntegrationTest {
                 .andExpect(jsonPath("$.prime").value(true));
     }
 
+    /**
+     * Test GET /api/v1/math/factorial with number 5.
+     * Expects HTTP 200 and factorial = 120 in the response.
+     */
     @Test
     void testCalculateFactorial() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/math/factorial")
@@ -36,6 +49,10 @@ class MathControllerIntegrationTest {
                 .andExpect(jsonPath("$.factorial").value(120));
     }
 
+    /**
+     * Test GET /api/v1/math/prime with a negative number.
+     * Should trigger @PositiveOrZero validation and return 400 BAD REQUEST with validation message.
+     */
     @Test
     void testNegativeNumberForPrime_ShouldInvokeException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/math/prime")
@@ -46,6 +63,10 @@ class MathControllerIntegrationTest {
                 .andExpect(jsonPath("$.message['checkIfPrimeNumber.number']").value("Number must be positive or 0"));
     }
 
+    /**
+     * Test GET /api/v1/math/factorial with a negative number.
+     * Should trigger @PositiveOrZero validation and return 400 BAD REQUEST with validation message.
+     */
     @Test
     void testNegativeNumberForFactorial_ShouldInvokeException() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/math/factorial")

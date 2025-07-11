@@ -11,9 +11,16 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+// Handles any thrown exceptions globally
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handles validation errors triggered by @Valid on request bodies (e.g., DTOs).
+     *
+     * @param e The exception containing validation details.
+     * @return Structured error response with details of invalid fields.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         Map<String, String> messages = new HashMap<>();
@@ -30,6 +37,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles validation errors from @RequestParam, @PathVariable, or @RequestHeader
+     * (e.g., from @PositiveOrZero, @Min, etc.).
+     *
+     * @param e The exception containing constraint violations.
+     * @return Structured error response with details of invalid parameters.
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
         Map<String, String> messages = new HashMap<>();

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.math.BigInteger;
 
+// DTO class for returning the result of a prime number check.. Inherits number properties from BaseResponseDTO
 public class PrimeResponseDTO extends BaseResponseDTO{
     private boolean isPrime;
 

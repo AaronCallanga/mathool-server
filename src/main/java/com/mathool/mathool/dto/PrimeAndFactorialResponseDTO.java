@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.math.BigInteger;
 
+// DTO class for returning both prime check and factorial result in a single response.. Inherits number properties from BaseResponseDTO
 public class PrimeAndFactorialResponseDTO extends BaseResponseDTO{
     private boolean isPrime;
     @JsonSerialize(using = ToStringSerializer.class)

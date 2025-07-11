@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.math.BigInteger;
 
+// DTO class for returning the result of a factorial operation. Inherits number properties from BaseResponseDTO
 public class FactorialResponseDTO extends BaseResponseDTO{
     // Serialize BigInteger to string
     @JsonSerialize(using = ToStringSerializer.class)
